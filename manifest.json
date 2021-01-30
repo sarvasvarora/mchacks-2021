@@ -1,0 +1,27 @@
+{
+  "name": "Youtube-vidsum",
+  "version": "0.1",
+  "description": "Summary of youtube videos so you do not have to waste time opening baby by justin beiber.",
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "declarativeContent",
+    "storage",
+    "*://*.youtube.*"
+  ],
+  "manifest_version": 2,
+  "background": {
+    "scripts": ["backgroud.js"],
+    "persistent": false
+  },
+  "page_action": {
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.*"],
+      "css": ["notes.css"],
+      "js": ["notes.js"]
+    }
+  ]
+}
