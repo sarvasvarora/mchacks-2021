@@ -1,4 +1,4 @@
-sbdocument.getElementById("other").style.display = "none";
+document.getElementById("other").style.display = "none";
 document.getElementById("summary").style.display = "none";
 const bgpage = chrome.extension.getBackgroundPage();
 
