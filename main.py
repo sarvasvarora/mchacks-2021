@@ -35,33 +35,16 @@ def parse_content(captions_url: str) -> str:
 
 
 def create_summary(text: str) -> str:
-    """Create a summary out of the input text.
-
-    Args:
-        text (str): The input text
-
-    Returns:
-        str: 100 word summary of the input text
-    """
     summary = summarize(text, word_count = 100)
     return summary
 
 
 
 
-path = "./McHacks-5783c73596b5.json"
+path = "key.json"
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = path
 
-def get_top_keywords(content: str):
-    """Get the top 5 frequently occuring keywords in the input text
-
-    Args:
-        content (str): The input text
-
-    Returns:
-        list: List of top 5 keywords
-    """
-
+def get_top_keywords(content):
     client = language_v1.LanguageServiceClient()
     type_ = language_v1.Document.Type.PLAIN_TEXT
     language = "en"
@@ -84,21 +67,45 @@ def get_top_keywords(content: str):
             if number_of_keyword == 5:
                 break
 
+            ##### If we want to display more information about the keywords
+            
+            # Get entity type, e.g. PERSON, LOCATION, ADDRESS, NUMBER, et al
+            #print(u"Entity type: {}".format(language_v1.Entity.Type(entity.type_).name))
+
+            # Get the salience score associated with the entity in the [0, 1.0] range
+            #print(u"Salience score: {}".format(entity.salience))
+
+
+            #for metadata_name, metadata_value in entity.metadata.items():
+                #print(u"{}: {}".format(metadata_name, metadata_value))
+
+            # Loop over the mentions of this entity in the input document.
+            # The API currently supports proper noun mentions.
+            #for mention in entity.mentions:
+                #print(u"Mention text: {}".format(mention.text.content))
+
+            # Get the mention type, e.g. PROPER for proper noun
+            #print(u"Mention type: {}".format(language_v1.EntityMention.Type(mention.type_).name))
     return keywords
 
 
 
 def get_summary(request):
-    """The main API function, deployed on Google Cloud Function.
+    headers = {}
+    if request.method == 'OPTIONS':
+        headers = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Max-Age': '3600'
+        }
 
-    Returns a JSON containing the summary and the top 5 keywords in the text transcript.
+        return ('', 204, headers)
 
-    Args:
-        request (dict): JSON input containing the URL of the captions file. Format: {"url" : <INSERT URL HERE>}
-
-    Returns:
-        dict: JSON dump (string) containing the summary and the list of top 5 keywords
-    """
+    # Set CORS headers for the main request
+    headers = {
+        'Access-Control-Allow-Origin': '*'
+    }
     URL = request.get_json(silent=True, force=True)['url']
     text = parse_content(URL)
     text_with_punctuation = requests.post("http://bark.phon.ioc.ee/punctuator", {"text": text})
@@ -106,5 +113,5 @@ def get_summary(request):
 
     summary = create_summary(text)
     keywords = get_top_keywords(text)
-    
-    return json.dumps({"summary" : summary, "keywords" : keywords})
+
+    return (json.dumps({"summary" : summary, "keywords" : keywords}), 200, headers)

@@ -19,8 +19,6 @@ function myFunction(tablink) {
 // const response = {};
 
 const showInfo = (url) => {
-  const response = {};
-
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json; charset=UTF-8");
 
@@ -29,13 +27,16 @@ const showInfo = (url) => {
 
   var requestOptions = {
     method: 'POST',
-    mode: 'no-cors',
+    //mode: 'no-cors',
     headers: myHeaders,
     body: raw,
     redirect: 'follow',
   };
   fetch("https://northamerica-northeast1-mchacks-303315.cloudfunctions.net/summary", requestOptions)
-    .then(response => response.json())
+    .then((response) => {
+      console.log(response);
+      return response.json()
+    })
     .then(res => {
       console.log(res);
       document.getElementById("sumtext").innerText = res.summary + '\n <strong>Keywords</strong>' + res.keywords.toString;
