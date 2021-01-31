@@ -1,8 +1,29 @@
 <!DOCTYPE html>
-<html style="min-width: 300px; min-height: 300px">
-  <head> </head>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="popup.css" />
+  </head>
   <body>
-    <div id="id1">-</div>
-    <script type="text/javascript" src="popup.js"></script>
+    <div id="prompt">
+      <button type="button center" id="btn" class="btn btn-dark">
+        <h1>Get summary</h1>
+      </button>
+    </div>
+    <div id="summary">
+      <h1>Summary</h1>
+      <div id="sumtext" class="alert alert-dark" role="alert">
+        This is the summary for the video
+      </div>
+    </div>
+    <div id="other" class="alert alert-danger" role="alert">
+      You are not on YouTube!
+    </div>
+    <script src="./popup.js"></script>
   </body>
 </html>
