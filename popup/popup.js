@@ -27,7 +27,7 @@ const showInfo = (url) => {
 
   var requestOptions = {
     method: 'POST',
-    //mode: 'no-cors',
+    // mode: 'no-cors',
     headers: myHeaders,
     body: raw,
     redirect: 'follow',
@@ -39,7 +39,9 @@ const showInfo = (url) => {
     })
     .then(res => {
       console.log(res);
-      document.getElementById("sumtext").innerText = res.summary + '\n <strong>Keywords</strong>' + res.keywords.toString;
+      document.getElementById("sumtext").innerText = res.summary;
+      document.getElementById("kw").innerText = "keyword";
+      document.getElementById("key").innerText = res.keywords.toString();
     })
     .catch(error => console.log('error', error));
 };
