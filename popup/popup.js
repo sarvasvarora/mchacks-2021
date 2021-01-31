@@ -13,6 +13,7 @@ function myFunction(tablink) {
     document.getElementById("other").style.display = "block";
   }
 }
+
 // prettier-ignore
 // let url = false;
 // const response = {};
@@ -22,9 +23,10 @@ const getInfo = (url) => {
   // "https://www.youtube.com/api/timedtext?v=vM-2O-uKBNQ&asr_langs=de%2Cen%2Ces%2Cfr%2Cit%2Cja%2Cko%2Cnl%2Cpt%2Cru&caps=asr&exp=xftt&xorp=true&xoaf=5&hl=en&ip=0.0.0.0&ipbits=0&expire=1612109209&sparams=ip%2Cipbits%2Cexpire%2Cv%2Casr_langs%2Ccaps%2Cexp%2Cxorp%2Cxoaf&signature=52E02FA0668DF9B92BBD4ED4E27D5AD646C30006.E770E85FD7A4347771A85A3EF80AC0D03EBD51EB&key=yt8&lang=en&name=CC%20(English)&fmt=json3&xorb=2&xobt=3&xovt=3 "
 
   var myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Content-Type", "application/json; charset=UTF-8");
 
-  var raw = JSON.stringify({"url": url});
+  var raw = JSON.stringify({url : url});
+  console.log(raw);
 
   var requestOptions = {
     method: 'POST',
@@ -37,14 +39,14 @@ const getInfo = (url) => {
     .then(response => response.json())
     .then(result => {
       response = result;
-      console.log(result)
+      console.log(response);
     })
     .catch(error => console.log('error', error));
 
   return response;
 };
 
-document.getElementById("btn").onclick = function myFunction() {
+document.getElementById("btn").addEventListener("click", () => {
   document.getElementById("prompt").style.display = "none";
   document.getElementById("summary").style.display = "block";
   let url = bgpage.url;
@@ -59,4 +61,4 @@ document.getElementById("btn").onclick = function myFunction() {
   } else {
     document.getElementById("sumtext").innerText = "No transcription found";
   }
-};
+});
