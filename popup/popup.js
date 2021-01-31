@@ -53,7 +53,7 @@ document.getElementById("btn").onclick = function myFunction() {
     const res = getInfo(url);
     document.getElementById("sumtext").innerText =
       res.summary +
-      '\n <span class="bold>Keywords</span>' +
+      '\n <strong>Keywords</strong>' +
       res.keywords.toString;
     console.log(res);
   } else {
