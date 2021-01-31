@@ -40,11 +40,13 @@ const showInfo = (url) => {
     .then(res => {
       console.log(res);
       document.getElementById("sumtext").innerText = res.summary;
-      document.getElementById("kw").innerText = "keyword";
+      document.getElementById("kwtext").style.display = "block";
+      document.getElementById("kw").innerText = "Keywords";
       document.getElementById("key").innerText = res.keywords.toString();
     })
     .catch(error => console.log('error', error));
 };
+
 
 document.getElementById("btn").addEventListener("click", () => {
   document.getElementById("prompt").style.display = "none";
