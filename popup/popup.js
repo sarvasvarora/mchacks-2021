@@ -18,9 +18,8 @@ function myFunction(tablink) {
 // let url = false;
 // const response = {};
 
-const getInfo = (url) => {
+const showInfo = (url) => {
   const response = {};
-  // "https://www.youtube.com/api/timedtext?v=vM-2O-uKBNQ&asr_langs=de%2Cen%2Ces%2Cfr%2Cit%2Cja%2Cko%2Cnl%2Cpt%2Cru&caps=asr&exp=xftt&xorp=true&xoaf=5&hl=en&ip=0.0.0.0&ipbits=0&expire=1612109209&sparams=ip%2Cipbits%2Cexpire%2Cv%2Casr_langs%2Ccaps%2Cexp%2Cxorp%2Cxoaf&signature=52E02FA0668DF9B92BBD4ED4E27D5AD646C30006.E770E85FD7A4347771A85A3EF80AC0D03EBD51EB&key=yt8&lang=en&name=CC%20(English)&fmt=json3&xorb=2&xobt=3&xovt=3 "
 
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json; charset=UTF-8");
@@ -37,13 +36,11 @@ const getInfo = (url) => {
   };
   fetch("https://northamerica-northeast1-mchacks-303315.cloudfunctions.net/summary", requestOptions)
     .then(response => response.json())
-    .then(result => {
-      response = result;
-      console.log(response);
+    .then(res => {
+      console.log(res);
+      document.getElementById("sumtext").innerText = res.summary + '\n <strong>Keywords</strong>' + res.keywords.toString;
     })
     .catch(error => console.log('error', error));
-
-  return response;
 };
 
 document.getElementById("btn").addEventListener("click", () => {
@@ -52,12 +49,7 @@ document.getElementById("btn").addEventListener("click", () => {
   let url = bgpage.url;
   console.log(url);
   if (url) {
-    const res = getInfo(url);
-    document.getElementById("sumtext").innerText =
-      res.summary +
-      '\n <strong>Keywords</strong>' +
-      res.keywords.toString;
-    console.log(res);
+    showInfo(url);
   } else {
     document.getElementById("sumtext").innerText = "No transcription found";
   }

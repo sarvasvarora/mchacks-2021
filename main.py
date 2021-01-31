@@ -99,7 +99,7 @@ def get_summary(request):
     Returns:
         dict: JSON dump (string) containing the summary and the list of top 5 keywords
     """
-    URL = request.get_json(silent=True)['url']
+    URL = request.get_json(silent=True, force=True)['url']
     text = parse_content(URL)
     text_with_punctuation = requests.post("http://bark.phon.ioc.ee/punctuator", {"text": text})
     text = text_with_punctuation.content.decode('utf-8')
